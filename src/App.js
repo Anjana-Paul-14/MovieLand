@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import './App.css';
 import SearchIcon from './search.svg';
+import MovieCard  from "./MovieCard";
 // key: 95b5e460
 
 const API_URL = 'https://www.omdbapi.com?apikey=95b5e460';
@@ -13,14 +14,13 @@ const movie1 = {
     }
 
 const App = () => {
-
+    const [movies, setMovies] = useState([]);
+    const [searchTerm, setSearchTerm ] = useState(' ');
     const searchMovies = async (title) => {
         const response = await fetch(`${API_URL}&s=${title}`);
         const data = await response.json();
 
-        console.log(data.Search);
-    
-    
+        setMovies(data.Search); 
     }
 
     useEffect(()=> {
@@ -31,41 +31,36 @@ const App = () => {
     return (
         <div className="app">
             <h1>MovieLand</h1>
-
             <div className="search">
                 <input
-                placeholder="SEarch"
-                value=" Superman "
-                onChange={ () => {} }
+                placeholder="Search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <img
                 src={SearchIcon}
                 alt="search"
-                onClick={ () => {}}
+                onClick={ () => searchMovies(searchTerm)}
                 />
             </div>
+            {
+                movies ?.length > 0
+                    ? (
+                        <div className="container">
+                            {/* <MovieCard movie1={movie1[0]}/> */}
+                            {movies.map((movie) => (
+                                <MovieCard movie={movie} />
+                            ))}
 
-            <div className="container">
-                <div className="movie">
-                    
-                    <div>
-                        <p> {movie1.Year} </p>
-                    </div>
+                        </div>
+                ) : (
+                    <div className="empty">
+                        <h2>No movies</h2>
 
-                    <div>
-                        <img src={movie1.Poster} alt={movie1.Title}/>
                     </div>
-                    <div>
-                        <span>{movie1.Type}</span>
-                        <h3> {movie1.Title}</h3>
-                    </div>
-                
-                </div>
-            </div>
-                
-
+                    )
+            }
         </div>
     );
 }
-
 export default App;
