@@ -3,7 +3,7 @@
 Welcome to MovieLand, a basic movie website created using React and CSS. This project is deployed on Netlify and serves as a platform to explore a curated list of movies. Users can search for movies and view detailed information, including the movie's name, type, year of release, and an accompanying image.
 
 ## Demo
-Check out the live demo of MovieLand here: 
+Check out the live demo of MovieLand here: https://anjana-movieland.netlify.app/
 
 ## Features
 1. React Components
